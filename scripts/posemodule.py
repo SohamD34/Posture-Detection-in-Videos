@@ -113,7 +113,7 @@ class PoseProcessor:
 
         self.cap.release()
         cv2.destroyAllWindows()
-
+        return self.output_path
 
 
 
@@ -209,7 +209,13 @@ def convert_to_modern_mp4(input_path, output_path):
 
 if __name__ == "__main__":
 
-    frame_dir = "frames/posemodule/demo1/"
+    video_name = "demo1"
+    processor = PoseProcessor(video_name)
+    frame_dir = processor.process_video()
+
+    # frame_dir = "frames/posemodule/demo1/"
     vc = VideoCreator(frame_dir, output_path="output/demo1_output.avi", fps=30)
     output_mpeg4_file = vc.create_video()
     output_mp4_file = convert_to_modern_mp4(output_mpeg4_file, "output/demo1_output.mp4")
+
+    print(f"Output video saved at: {output_mp4_file}")
