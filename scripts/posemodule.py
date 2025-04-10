@@ -213,9 +213,9 @@ if __name__ == "__main__":
     processor = PoseProcessor(video_name)
     frame_dir = processor.process_video()
 
-    # frame_dir = "frames/posemodule/demo1/"
-    vc = VideoCreator(frame_dir, output_path="output/demo1_output.avi", fps=30)
+    frame_dir = f"frames/posemodule/{video_name}/"
+    vc = VideoCreator(frame_dir, output_path=f"output/{video_name}_output.avi", fps=30)
     output_mpeg4_file = vc.create_video()
-    output_mp4_file = convert_to_modern_mp4(output_mpeg4_file, "output/demo1_output.mp4")
+    output_mp4_file = convert_to_modern_mp4(output_mpeg4_file, f"output/{video_name}_output_posemodule.mp4")
 
     print(f"Output video saved at: {output_mp4_file}")

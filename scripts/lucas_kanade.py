@@ -6,6 +6,96 @@ import subprocess
 from natsort import natsorted
 warnings.filterwarnings("ignore")
 
+# class LucasKanadePositionDetector:
+#     '''
+#     Class to process a video and detect positions using Lucas-Kanade Optical Flow.
+
+#     Args:
+#         video_path (str): Path to the input video file.
+#         output_dir (str): Directory to save the processed frames.
+#         max_corners (int): Maximum number of corners to return. Default is 100.
+#         quality_level (float): Quality level for corner detection. Default is 0.3.
+#         min_distance (int): Minimum distance between detected corners. Default is 7.
+#         block_size (int): Size of the averaging block for corner detection. Default is 7.
+#         win_size (tuple): Size of the search window for optical flow. Default is (15, 15).
+#         max_level (int): Maximum number of pyramid levels for optical flow. Default is 2.
+#         criteria (tuple): Criteria for termination of the iterative search. Default is (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03).
+
+#     Methods:
+#         detect(): Processes the video frame by frame, detecting positions and saving frames.
+    
+#     Returns:
+#         Images with detected positions are saved in the specified output directory.
+#     '''
+
+#     def __init__(self, video_path, output_dir, max_corners=100, quality_level=0.3,
+#                  min_distance=7, block_size=7, win_size=(15, 15), max_level=2,
+#                  criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)):
+        
+#         self.video_path = video_path
+#         self.output_dir = output_dir
+#         os.makedirs(self.output_dir, exist_ok=True)
+
+#         # Feature and flow parameters
+#         self.feature_params = dict(maxCorners=max_corners, qualityLevel=quality_level,
+#                                    minDistance=min_distance, blockSize=block_size)
+#         self.lk_params = dict(winSize=win_size, maxLevel=max_level, criteria=criteria)
+
+
+
+#     def detect(self):
+#         cap = cv2.VideoCapture(self.video_path)
+#         ret, old_frame = cap.read()
+
+#         if not ret:
+#             print(f"[Error] Could not read the video: {self.video_path}")
+#             cap.release()
+#             return
+
+#         old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+#         p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **self.feature_params)
+
+#         frame_id = 0
+
+#         while True:
+#             frame_id += 1
+#             ret, frame = cap.read()
+#             if not ret:
+#                 break
+
+#             frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+#             if p0 is not None and len(p0) > 0:
+#                 p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **self.lk_params)
+
+#                 if p1 is not None and st is not None:
+#                     good_new = p1[st == 1]
+#                     good_old = p0[st == 1]
+
+#                     for new, old in zip(good_new, good_old):
+#                         a, b = new.ravel()
+#                         c, d = old.ravel()
+#                         cv2.line(frame, (int(a), int(b)), (int(c), int(d)), (0, 255, 0), 2)
+#                         cv2.circle(frame, (int(a), int(b)), 5, (0, 0, 255), -1)
+
+#                     p0 = good_new.reshape(-1, 1, 2)
+#                 else:
+#                     p0 = cv2.goodFeaturesToTrack(frame_gray, mask=None, **self.feature_params)
+#             else:
+#                 p0 = cv2.goodFeaturesToTrack(frame_gray, mask=None, **self.feature_params)
+
+#             cv2.imwrite(os.path.join(self.output_dir, f'frame_{frame_id}.jpg'), frame)
+
+#             if cv2.waitKey(30) & 0xFF == 27:
+#                 break
+
+#             old_gray = frame_gray.copy()
+
+#         cap.release()
+#         cv2.destroyAllWindows()
+#         print(f"Processed video saved to: {self.output_dir}")
+
+
 class LucasKanadePositionDetector:
     '''
     Class to process a video and detect positions using Lucas-Kanade Optical Flow.
@@ -40,8 +130,6 @@ class LucasKanadePositionDetector:
         self.feature_params = dict(maxCorners=max_corners, qualityLevel=quality_level,
                                    minDistance=min_distance, blockSize=block_size)
         self.lk_params = dict(winSize=win_size, maxLevel=max_level, criteria=criteria)
-
-
 
     def detect(self):
         cap = cv2.VideoCapture(self.video_path)
@@ -78,6 +166,13 @@ class LucasKanadePositionDetector:
                         cv2.line(frame, (int(a), int(b)), (int(c), int(d)), (0, 255, 0), 2)
                         cv2.circle(frame, (int(a), int(b)), 5, (0, 0, 255), -1)
 
+                    # ➕ Draw lines between all detected new points
+                    for i in range(len(good_new)):
+                        for j in range(i + 1, len(good_new)):
+                            pt1 = tuple(good_new[i].ravel().astype(int))
+                            pt2 = tuple(good_new[j].ravel().astype(int))
+                            cv2.line(frame, pt1, pt2, (255, 0, 0), 1)
+
                     p0 = good_new.reshape(-1, 1, 2)
                 else:
                     p0 = cv2.goodFeaturesToTrack(frame_gray, mask=None, **self.feature_params)
@@ -94,7 +189,6 @@ class LucasKanadePositionDetector:
         cap.release()
         cv2.destroyAllWindows()
         print(f"Processed video saved to: {self.output_dir}")
-
 
 
 
@@ -191,7 +285,7 @@ def convert_to_modern_mp4(input_path, output_path):
 
 if __name__ == "__main__":
 
-    video_name = "demo1"
+    video_name = "demo2"
     video_path = f"data/{video_name}.mp4"
     frame_dir = f"frames/lucas_kanade/{video_name}/"
 
@@ -199,7 +293,7 @@ if __name__ == "__main__":
     lk_detector.detect()
 
 
-    frame_dir = "frames/posemodule/demo1/"
-    vc = VideoCreator(frame_dir, output_path="output/demo1_output_lucas_kanade.avi", fps=30)
+    frame_dir = f"frames/lucas_kanade/{video_name}/"
+    vc = VideoCreator(frame_dir, output_path=f"output/{video_name}_output_lucas_kanade.avi", fps=30)
     output_mpeg4_file = vc.create_video()
-    output_mp4_file = convert_to_modern_mp4(output_mpeg4_file, "output/demo1_output_lucas_kanade.mp4")
+    output_mp4_file = convert_to_modern_mp4(output_mpeg4_file, f"output/{video_name}_output_lucas_kanade.mp4")
