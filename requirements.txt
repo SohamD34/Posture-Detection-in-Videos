@@ -95,7 +95,6 @@ pycparser==2.22
 pycups==2.0.1
 pytz==2022.1
 pyxdg==0.27
-PyYAML==5.4.1
 referencing==0.36.2
 reportlab==3.6.8
 requests==2.32.3
