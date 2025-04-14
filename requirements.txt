@@ -56,6 +56,7 @@ monotonic==1.6
 more-itertools==8.10.0
 mpmath==1.3.0
 namex==0.0.8
+natsort
 netifaces==0.11.0
 networkx==3.3
 numpy==1.26.4
@@ -73,12 +74,14 @@ nvidia-nvjitlink-cu12==12.6.77
 nvidia-nvtx-cu12==12.1.105
 oauthlib==3.2.0
 olefile==0.46
+opencv-python
 opt_einsum==3.4.0
 optree==0.13.0
 packaging==24.1
 pandas==2.2.3
 paramiko==2.9.3
 pexpect==4.8.0
+pick==2.4.0
 Pillow==9.0.1
 protobuf==4.25.5
 ptyprocess==0.7.0
