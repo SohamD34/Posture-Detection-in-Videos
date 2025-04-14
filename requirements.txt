@@ -17,7 +17,7 @@ cvzone==1.6.1
 cycler==0.12.1
 dbus-python==1.2.18
 distro==1.7.0
-duplicity==0.8.21
+duplicity
 fasteners==0.14.1
 filelock==3.16.1
 flatbuffers==24.3.25
