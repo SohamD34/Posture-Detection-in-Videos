@@ -93,9 +93,6 @@ pyarrow==19.0.1
 pycairo==1.20.1
 pycparser==2.22
 pycups==2.0.1
-python-apt==2.4.0+ubuntu3
-python-dateutil==2.9.0.post0
-python-debian==0.1.43+ubuntu1.1
 pytz==2022.1
 pyxdg==0.27
 PyYAML==5.4.1
