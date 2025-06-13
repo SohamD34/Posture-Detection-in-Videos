@@ -13,6 +13,7 @@ from natsort import natsorted
 import matplotlib.pyplot as plt
 import subprocess
 import random
+import logging
 warnings.filterwarnings("ignore")
 
 
@@ -198,8 +199,32 @@ def convert_to_modern_mp4(input_path, output_path):
         output_path
     ]
     subprocess.run(cmd, check=True)
-    print(f"Video successfully saved to: {output_path}")
+    log_text('logs/log.txt',f"Video successfully saved to: {output_path}")
     os.remove(input_path)
     return input_path
 
 
+def setup_logger(log_file_path):
+    '''
+    A helper function to setup the logger - allowing it to access files, read & write them.
+    '''
+    logger = logging.getLogger('custom_logger')
+    logger.setLevel(logging.INFO)
+
+    if not logger.handlers:
+        fh = logging.FileHandler(log_file_path)
+        formatter = logging.Formatter('%(asctime)s - %(message)s')
+
+        fh.setLevel(logging.INFO)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+
+    return logger
+
+
+def log_text(log_file_path, text):
+    '''
+    A helper function to log the text to the file path specified.
+    '''
+    logger = setup_logger(log_file_path)
+    logger.info(text)
