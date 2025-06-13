@@ -1,0 +1,22 @@
+2025-06-13 20:26:44,303 - Horn-Shunck Detection started for demo1
+2025-06-13 20:32:54,703 - Frames saved at: frames/horn_schunck/demo1
+2025-06-13 20:32:54,703 - Starting video creation...
+2025-06-13 20:32:56,580 - Video successfully saved to: output/demo1_output_horn_schunck.mp4
+2025-06-13 20:32:56,581 - Output video saved at: output/demo1_output_horn_schunck.avi
+2025-06-13 20:32:56,581 - Horn-Shunck Detection started for demo2
+2025-06-13 20:35:16,669 - Frames saved at: frames/horn_schunck/demo2
+2025-06-13 20:35:16,669 - Starting video creation...
+2025-06-13 20:35:18,580 - Video successfully saved to: output/demo2_output_horn_schunck.mp4
+2025-06-13 20:35:18,582 - Output video saved at: output/demo2_output_horn_schunck.avi
+2025-06-13 20:37:49,001 - Lucas-Kanade Flow Detection started for demo1
+2025-06-13 20:37:49,476 - Starting video creation...
+2025-06-13 20:39:18,870 - Pose processing started for demo1
+2025-06-13 20:39:23,470 - Pose processing completed for demo1
+2025-06-13 20:39:23,470 - Starting video creation...
+2025-06-13 20:39:25,277 - Video successfully saved to: output/demo1_output_posemodule.mp4
+2025-06-13 20:39:25,278 - Output video saved at: output/demo1_output.avi
+2025-06-13 20:39:25,278 - Pose processing started for demo2
+2025-06-13 20:39:37,672 - Pose processing completed for demo2
+2025-06-13 20:39:37,672 - Starting video creation...
+2025-06-13 20:39:39,562 - Video successfully saved to: output/demo2_output_posemodule.mp4
+2025-06-13 20:39:39,564 - Output video saved at: output/demo2_output.avi
